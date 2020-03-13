@@ -4,15 +4,15 @@ Apache 2.4 module implementation which execute Pascal program.
 
 ## Requirement
 
-- Free Pascal compiler
-- Apache 2.4
+- [Free Pascal compiler](https://www.freepascal.org)
+- [Apache 2.4](https://httpd.apache.org/docs/2.4/)
 
-## Installation
+## Setup
 
 - Clone this repository
 
 ```
-$ git clone https://github.com/zamrony/mod_pascal
+$ git clone https://github.com/zamronypj/mod_pascal
 ```
 
 - Compile mod_pascal
@@ -22,6 +22,8 @@ $ fpc mod_pascal
 ```
 
 - Add Apache configuration to load module
+
+For example in Debian,
 
 Create `/etc/apache2/mods-available/pascal.conf` file
 

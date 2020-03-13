@@ -1,3 +1,10 @@
+{-----------------------------------------
+   This file is part of mod_pascal,
+   Apache 2.4 module which can execute pascal
+   program
+
+   @author Zamrony P. Juhara <zamronypj@yahoo.com>
+------------------------------------------}
 unit instant_fpc;
 
 interface

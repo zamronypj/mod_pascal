@@ -1,6 +1,7 @@
 {-----------------------------------------
-   Apache 2.4 module which can execute pascal
-   program
+   mod_pascal,
+   Apache 2.4 module which can execute
+   Pascal program
 
    @author Zamrony P. Juhara <zamronypj@yahoo.com>
 ------------------------------------------}

@@ -64,4 +64,4 @@ begin
 end.
 ```
 
-Open URL http://localhost/test.pas from Internet browser.
+Open URL http://localhost/test.pas from Internet browser, you should see text `Hello from Pascal` printed in browser.

@@ -25,15 +25,16 @@ $ fpc mod_pascal
 
 For example in Debian,
 
-Create `/etc/apache2/mods-available/pascal.conf` file
+Create `pascal.conf` file in `/etc/apache2/mods-available` directory
 
 ```
 <IfModule pascal_module>
+    # handle all files having .pas extension
     SetHandler pascal_module .pas
 </IfModule>
 ```
 
-Create `/etc/apache2/mods-available/pascal.load` file
+Create `pascal.load` file in `/etc/apache2/mods-available` directory
 
 ```
 LoadModule pascal_module /path/to/libmod_pascal.so
@@ -62,3 +63,5 @@ begin
     writeln('Hello from Pascal');
 end.
 ```
+
+Open URL http://localhost/test.pas from Internet browser.

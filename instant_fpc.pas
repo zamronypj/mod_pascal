@@ -9,7 +9,12 @@ interface
      Compile program source using
      InstantFPC
     -------------------------}
-    function compileProgram(const filename : string; out compileOutput : string) : integer;
+    function compileProgram(
+        const fpcBin : string;
+        const cacheDir : string;
+        const filename : string;
+        out compileOutput : string
+    ) : integer;
 
 implementation
 
@@ -39,6 +44,8 @@ const
     end;
 
     function compileProgram(
+        const fpcBin : string;
+        const cacheDir : string;
         const filename : string;
         out compileOutput : string
     ) : integer;
@@ -49,8 +56,8 @@ const
         try
             afpcProc := TProcess.create(nil);
             try
-                afpcProc.executable := '/usr/local/bin/instantfpc';
-                afpcProc.environment.add('INSTANTFPCCACHE=/home/zamroni/.cache/instantfpc');
+                afpcProc.executable := fpcBin;
+                afpcProc.parameters.add('--set-cache=' + cacheDir);
                 afpcProc.parameters.add(filename);
                 afpcProc.Options := afpcProc.Options + [poUsePipes];
                 afpcProc.execute();

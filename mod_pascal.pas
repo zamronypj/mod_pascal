@@ -20,54 +20,63 @@ const
 
     MODULE_NAME = 'pascal_module';
 
+    DEFAULT_INSTANT_FPC_BIN = '/usr/local/bin/instantfpc';
+    DEFAULT_CACHE_DIR = '/tmp';
+
 var
-    pascal_module: module;{$ifdef unix} public name MODULE_NAME;{$endif}
+    pascal_module: module;{$IFDEF UNIX} public name MODULE_NAME;{$ENDIF}
 
 exports
 
     pascal_module name MODULE_NAME;
 
-{*******************************************************************
-*  Handles apache requests
-*******************************************************************}
+{----------------------------------------------
+  Handles apache requests
+-----------------------------------------------}
 function defaultHandler(r: prequest_rec): Integer; cdecl;
-
 var
     requestedHandler: string;
     compileOutput : string;
-
+    instantFpcBin : string;
+    cacheDir : string;
 begin
+    //TODO: add ability to set from configuration
+    instantFpcBin := DEFAULT_INSTANT_FPC_BIN;
+    cacheDir := DEFAULT_CACHE_DIR;
+
     requestedHandler := r^.handler;
 
     { We decline to handle a request if r->handler is not the value of MODULE_NAME}
-    if not SameText(requestedHandler, MODULE_NAME) then
+    if not sameText(requestedHandler, MODULE_NAME) then
     begin
         result := DECLINED;
-        Exit;
+        exit;
     end;
 
     ap_set_content_type(r, 'text/html');
 
-    { If the request is for a header only, and not a request for
-    the whole content, then return OK now. We don't have to do
-    anything else.
-    }
+    if not fileExists(r^.filename) then
+    begin
+        result := HTTP_NOT_FOUND;
+        exit;
+    end;
+
     if (r^.header_only <> 0) then
     begin
+        { handle HEAD request }
         result := OK;
         exit;
     end;
 
-    if (fileExists(r^.filename)) then
-    begin
-        compileOutput := '';
-        compileProgram(r^.filename, compileOutput);
-        ap_rwrite(PChar(compileOutput), length(compileOutput), r);
-        result := OK;
-    end else
-    begin
-        result := HTTP_NOT_FOUND;
-    end;
+    compileProgram(
+        instantFpcBin,
+        cacheDir,
+        r^.filename,
+        compileOutput
+    );
+    ap_rwrite(pchar(compileOutput), length(compileOutput), r);
+
+    result := OK;
 end;
 
 {*******************************************************************

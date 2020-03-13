@@ -56,7 +56,7 @@ $ sudo systemctl reload apache2
 
 ## Execute Pascal program
 
-Create Pascal program, for example  `/var/www/test.pas` as follows,
+Create Pascal program, for example  `/var/www/html/test.pas` with content as follows,
 
 ```
 begin

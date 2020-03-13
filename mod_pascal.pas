@@ -11,7 +11,7 @@ library mod_pascal;
 
 uses
 
-    sysUtils,
+    sysutils,
     httpd24,
     apr24,
     instant_fpc;
@@ -24,16 +24,16 @@ const
     DEFAULT_CACHE_DIR = '/tmp';
 
 var
-    pascal_module: module;{$IFDEF UNIX} public name MODULE_NAME;{$ENDIF}
+    pascalModule: module;{$IFDEF UNIX} public name MODULE_NAME;{$ENDIF}
 
 exports
 
-    pascal_module name MODULE_NAME;
+    pascalModule name MODULE_NAME;
 
 {----------------------------------------------
   Handles apache requests
 -----------------------------------------------}
-function defaultHandler(r: prequest_rec): Integer; cdecl;
+function defaultHandler(req: prequest_rec): Integer; cdecl;
 var
     requestedHandler: string;
     compileOutput : string;
@@ -44,59 +44,64 @@ begin
     instantFpcBin := DEFAULT_INSTANT_FPC_BIN;
     cacheDir := DEFAULT_CACHE_DIR;
 
-    requestedHandler := r^.handler;
+    requestedHandler := req^.handler;
 
-    { We decline to handle a request if r->handler is not the value of MODULE_NAME}
+    { We decline to handle a request if req->handler is not the value of MODULE_NAME}
     if not sameText(requestedHandler, MODULE_NAME) then
     begin
         result := DECLINED;
         exit;
     end;
 
-    ap_set_content_type(r, 'text/html');
+    ap_set_content_type(req, 'text/html');
 
-    if not fileExists(r^.filename) then
+    if not fileExists(req^.filename) then
     begin
         result := HTTP_NOT_FOUND;
         exit;
     end;
 
-    if (r^.header_only <> 0) then
+    if (req^.header_only <> 0) then
     begin
         { handle HEAD request }
         result := OK;
         exit;
     end;
 
+    //TODO: setup CGI Environment variable
+
     compileProgram(
         instantFpcBin,
         cacheDir,
-        r^.filename,
+        req^.filename,
         compileOutput
     );
-    ap_rwrite(pchar(compileOutput), length(compileOutput), r);
+
+    //TODO: setup HTTP response header
+
+    ap_rwrite(pchar(compileOutput), length(compileOutput), req);
 
     result := OK;
 end;
 
-{*******************************************************************
-*  Registers the hooks
-*******************************************************************}
+{----------------------------------------------
+  Registers the hooks
+-----------------------------------------------}
 procedure registerHooks(p: papr_pool_t); cdecl;
 begin
     ap_hook_handler(@defaultHandler, nil, nil, APR_HOOK_MIDDLE);
 end;
 
-{*******************************************************************
-*  Library initialization code
-*******************************************************************}
+{---------------------------------------------------
+  Library initialization code
+----------------------------------------------------}
 
 begin
-    fillChar(pascal_module, sizeOf(pascal_module), 0);
+    fillChar(pascalModule, sizeOf(pascalModule), 0);
 
-    STANDARD20_MODULE_STUFF(pascal_module);
+    STANDARD20_MODULE_STUFF(pascalModule);
 
-    with pascal_module do
+    with pascalModule do
     begin
         name := MODULE_NAME;
         register_hooks := @registerHooks;

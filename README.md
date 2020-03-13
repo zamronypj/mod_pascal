@@ -12,7 +12,7 @@ Apache 2.4 module implementation which execute Pascal program.
 - Clone this repository
 
 ```
-$ git clone https://github.com/zamronypj/mod_pascal
+$ git clone https://github.com/zamronypj/mod_pascal.git
 ```
 
 - Compile mod_pascal

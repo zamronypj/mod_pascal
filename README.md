@@ -25,7 +25,7 @@ $ fpc mod_pascal
 
 For example in Debian,
 
-Create `pascal.conf` file in `/etc/apache2/mods-available` directory
+Create `pascal.conf` file in `/etc/apache2/mods-available` directory with content as follows,
 
 ```
 <IfModule pascal_module>
@@ -34,7 +34,7 @@ Create `pascal.conf` file in `/etc/apache2/mods-available` directory
 </IfModule>
 ```
 
-Create `pascal.load` file in `/etc/apache2/mods-available` directory
+Create `pascal.load` file in `/etc/apache2/mods-available` directory with content as follows,
 
 ```
 LoadModule pascal_module /path/to/libmod_pascal.so

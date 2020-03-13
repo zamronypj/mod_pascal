@@ -72,7 +72,7 @@ begin
 
     //TODO: setup CGI Environment variable
 
-    compileProgram(
+    execProgram(
         instantFpcBin,
         cacheDir,
         req^.filename,

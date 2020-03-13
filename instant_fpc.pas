@@ -13,10 +13,10 @@ interface
 {$H+}
 
     {------------------------
-     Compile program source using
+     run program source using
      InstantFPC
     -------------------------}
-    function compileProgram(
+    function execProgram(
         const fpcBin : string;
         const cacheDir : string;
         const filename : string;
@@ -50,7 +50,7 @@ const
         end;
     end;
 
-    function compileProgram(
+    function execProgram(
         const fpcBin : string;
         const cacheDir : string;
         const filename : string;

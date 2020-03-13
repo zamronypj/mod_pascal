@@ -30,7 +30,7 @@ Create `pascal.conf` file in `/etc/apache2/mods-available` directory with conten
 ```
 <IfModule pascal_module>
     # handle all files having .pas extension
-    AddHandler pascal_module .pas
+    AddHandler pascal-handler .pas
 </IfModule>
 ```
 

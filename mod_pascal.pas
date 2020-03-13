@@ -20,6 +20,7 @@ uses
 const
 
     MODULE_NAME = 'pascal_module';
+    HANDLER_NAME = 'pascal-handler';
 
     DEFAULT_INSTANT_FPC_BIN = '/usr/local/bin/instantfpc';
     DEFAULT_CACHE_DIR = '/tmp';
@@ -47,8 +48,8 @@ begin
 
     requestedHandler := req^.handler;
 
-    { We decline to handle a request if req->handler is not the value of MODULE_NAME}
-    if not sameText(requestedHandler, MODULE_NAME) then
+    { We decline request if req->handler is not HANDLER_NAME}
+    if not sameText(requestedHandler, HANDLER_NAME) then
     begin
         result := DECLINED;
         exit;

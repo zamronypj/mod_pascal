@@ -48,10 +48,10 @@ $ sudo ln -s /etc/apache2/mods-available/pascal.conf
 $ sudo ln -s /etc/apache2/mods-available/pascal.load
 ```
 
-- Reload Apache
+- Restart Apache
 
 ```
-$ sudo systemctl reload apache2
+$ sudo systemctl restart apache2
 ```
 
 ## Execute Pascal program

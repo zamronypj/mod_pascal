@@ -10,6 +10,8 @@
 
 /bin
 /bin/unit
+!/bin/unit/README.md
+
 *.cfg
 *.so
 *.o

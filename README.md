@@ -34,6 +34,10 @@ Create `pascal.load` file in `/etc/apache2/mods-available` directory with conten
 ```
 LoadModule pascal_module /path/to/mod_pascal.so
 ```
+
+It is important that you use `pascal_module` to identify mod_pascal module and
+`pascal-handler` to identify handler.
+
 ### Enable mod_pascal
 
 Create symlink to `pascal.conf` and `pascal.load` in `/etc/apache2/mods-enabled` directory
@@ -66,3 +70,5 @@ end.
 ```
 
 Open URL http://localhost/test.pas from Internet browser, you should see text `Hello from Pascal` printed in browser.
+
+If  `test.pas` is downloaded then you do not register mod_pascal with Apache correctly.

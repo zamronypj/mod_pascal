@@ -9,29 +9,11 @@ Apache 2.4 module implementation which is capable to execute Pascal program just
 
 ## Setup
 
-### TL;DR
-
-```
-$ git clone https://github.com/zamronypj/mod_pascal.git
-$ cd_mod_pascal
-$ ./build.sh
-```
-
-### Clone this repository
-
-```
-$ git clone https://github.com/zamronypj/mod_pascal.git
-```
-
 ### Compile mod_pascal
 
 ```
-$ fpc src/mod_pascal
-```
-or with optimization level 3
-
-```
-$ fpc -O3 src/mod_pascal
+$ git clone https://github.com/zamronypj/mod_pascal.git
+$ cd_mod_pascal && ./setup.cfg.sh && ./build.sh
 ```
 
 ### Add Apache configuration to load module

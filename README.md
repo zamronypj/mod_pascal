@@ -32,7 +32,7 @@ Create `pascal.conf` file in `/etc/apache2/mods-available` directory with conten
 Create `pascal.load` file in `/etc/apache2/mods-available` directory with content as follows,
 
 ```
-LoadModule pascal_module /path/to/libmod_pascal.so
+LoadModule pascal_module /path/to/mod_pascal.so
 ```
 ### Enable mod_pascal
 

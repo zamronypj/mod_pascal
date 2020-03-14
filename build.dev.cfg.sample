@@ -1,0 +1,81 @@
+#-----------------------------------------
+#   This file is part of mod_pascal,
+#   Apache 2.4 module which can execute pascal
+#   program
+#
+#   @author Zamrony P. Juhara <zamronypj@yahoo.com>
+#------------------------------------------
+
+#----------------------------------------------
+# User configuration for development build
+# Please see Free Pascal Documentation for available
+# compiler switch configurations
+#----------------------------------------------
+
+#----------------------------------------------
+# halt compiler after error, warning and notes
+#----------------------------------------------
+-Sewn
+
+#----------------------------------------------
+# Generate debugging information for debugging with gdb.
+#----------------------------------------------
+-g
+
+#----------------------------------------------
+# Generate debugging information for debugging with gdb.
+#----------------------------------------------
+-gl
+
+#----------------------------------------------
+# Turn on heap trace for checking memory leak.
+#----------------------------------------------
+#-gh
+
+#----------------------------------------------
+# Check and assertion for I/O
+#----------------------------------------------
+-Ci
+
+#----------------------------------------------
+# Check and assertion for range
+#----------------------------------------------
+-Cr
+
+#----------------------------------------------
+# Check and assertion for overflow
+#----------------------------------------------
+-Co
+
+#----------------------------------------------
+# Check and assertion for stack
+#----------------------------------------------
+-Ct
+
+#----------------------------------------------
+# Check and assertion for method call verification
+#----------------------------------------------
+-CR
+
+#----------------------------------------------
+# include assertion code
+#----------------------------------------------
+-Sa
+
+#----------------------------------------------
+# verbose for debugging purpose
+#----------------------------------------------
+-vd
+
+#----------------------------------------------
+# Verbosity, show errors (e), warning (w), notes (n), hints (h)
+#----------------------------------------------
+-Vewnh
+
+#----------------------------------------------
+# Verbose unit searching info,
+# Remove comment, in case unit file is not found
+# so Free Pascal will output verbose message where
+# it tries to look for unit file
+#----------------------------------------------
+#-vut

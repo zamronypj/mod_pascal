@@ -1,9 +1,11 @@
 {*-----------------------------------------
- *  mod_pascal,
- *  Apache 2.4 module which can execute
- *  Pascal program
+ * mod_pascal
+ * Apache 2.4 module which can execute
+ * Pascal program
  *
- *  @author Zamrony P. Juhara <zamronypj@yahoo.com>
+ * @link      https://github.com/zamronypj/mod_pascal
+ * @copyright Copyright (c) 2020 Zamrony P. Juhara
+ * @license   https://github.com/zamronypj/mod_pascal/blob/master/LICENSE (LGPL-2.1)
  *------------------------------------------}
 library mod_pascal;
 

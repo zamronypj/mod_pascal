@@ -1,0 +1,47 @@
+#------------------------------------------------------------
+# mod_pascal
+#
+# @link      https://github.com/zamronypj/mod_pascal
+# @copyright Copyright (c) 2020 Zamrony P. Juhara
+# @license   https://github.com/zamronypj/mod_pascal/blob/master/LICENSE (LGPL-2.1)
+#--------------------------------------------------------------
+
+#----------------------------------------------
+# User configuration that applies to both
+# development and production environment
+# Please see Free Pascal Documentation for available
+# compiler configurations
+#----------------------------------------------
+
+#----------------------------------------------
+# Target OS
+# linux : Linux
+# win64 : Windows (not tested yet)
+# freebsd : FreeBSD (not tested yet)
+#----------------------------------------------
+-Tlinux
+
+#----------------------------------------------
+# Target CPU
+# x86_64 : Intel 64-bit architecture (default)
+# i386 : Intel 32-bit architecture
+#----------------------------------------------
+#-Px86_64
+
+#----------------------------------------------
+# Application Unit search path
+# USER_APP_DIR is contains user application base directory
+#----------------------------------------------
+-Fu$SRC_DIR$
+
+#-Fu$USER_APP_DIR$/path/to/other/units
+#-Fu$USER_APP_DIR$/path/to/other/units
+
+
+#----------------------------------------------
+# Include configuration based on build type (default is prod)
+# using #INCLUDE directive
+# For example
+# $ BUILD_TYPE=prod ./build.sh
+#----------------------------------------------
+#INCLUDE build.$BUILD_TYPE$.cfg

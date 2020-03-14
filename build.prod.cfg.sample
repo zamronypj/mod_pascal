@@ -1,0 +1,61 @@
+#-----------------------------------------
+#   This file is part of mod_pascal,
+#   Apache 2.4 module which can execute pascal
+#   program
+#
+#   @author Zamrony P. Juhara <zamronypj@yahoo.com>
+#------------------------------------------
+
+#----------------------------------------------
+# User configuration for production build
+# Please see Free Pascal Documentation for available
+# compiler switch configurations
+#----------------------------------------------
+
+#----------------------------------------------
+# halt compiler after error
+#----------------------------------------------
+-Se
+
+#----------------------------------------------
+# Level 3 optimization
+# Other available switch -O1, -O2, -O4
+#----------------------------------------------
+-O3
+
+#----------------------------------------------
+# Move frequent-used variable in register
+# This switch is actually redundant as this
+# already be covered by -O3 switch above.
+# It puts here just for completeness.
+#----------------------------------------------
+-Ooregvar
+
+#----------------------------------------------
+# Removing the calculation of dead values optimization
+# this optimization is included in -O4
+#----------------------------------------------
+-Oodeadvalues
+
+#----------------------------------------------
+# Use smart linking
+# Tell linker to only link symbols that your code
+# actually need to reduce executable size
+# @link: https://www.freepascal.org/docs-html/prog/progse30.html
+#----------------------------------------------
+-CX
+
+#----------------------------------------------
+# Link with smartlinked units
+# This is related to -CX switch above, If you enable
+# smart linking then smart linking process will only
+# be carried out if this switch is enable
+# @link: https://www.freepascal.org/docs-html/prog/progse30.html
+#----------------------------------------------
+-XX
+
+#----------------------------------------------
+# Strip all debug information and symbols
+# from output executable
+#----------------------------------------------
+-Xs

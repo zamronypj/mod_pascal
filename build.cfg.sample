@@ -29,14 +29,29 @@
 #-Px86_64
 
 #----------------------------------------------
-# Application Unit search path
-# USER_APP_DIR is contains user application base directory
+# Executable output path
+# $LIB_OUTPUT_DIR$ environment variable contains
+# directory where output executable. (Default is bin)
+#----------------------------------------------
+-FE$LIB_OUTPUT_DIR$
+
+#----------------------------------------------
+# Library name (mod_pascal.so)
+# $LIB_OUTPUT_NAME$ environment variable contains
+# name where output executable. (Default is mod_pascal.so)
+#----------------------------------------------
+-o$LIB_OUTPUT_NAME$
+
+#----------------------------------------------
+# Unit output path, default it bin/unit
+#----------------------------------------------
+-FU$UNIT_OUTPUT_DIR$
+
+#----------------------------------------------
+# Library Unit search path
+# SRC_DIR is contains library base directory
 #----------------------------------------------
 -Fu$SRC_DIR$
-
-#-Fu$USER_APP_DIR$/path/to/other/units
-#-Fu$USER_APP_DIR$/path/to/other/units
-
 
 #----------------------------------------------
 # Include configuration based on build type (default is prod)

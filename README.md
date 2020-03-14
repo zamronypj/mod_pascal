@@ -23,7 +23,7 @@ $ fpc mod_pascal
 or with optimization level 3
 
 ```
-$fpc -O3 mod_pascal
+$ fpc -O3 mod_pascal
 ```
 
 ### Add Apache configuration to load module

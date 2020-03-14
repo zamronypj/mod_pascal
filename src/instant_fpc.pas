@@ -45,6 +45,8 @@ const
         try
             repeat
                 bytesRead := proc.Output.read(buff^, BUFF_SIZE);
+                //TODO: handle timeout when process taking too
+                //much time to complete
                 outputStr.writeBuffer(buff^, bytesRead);
             until bytesRead = 0;
         finally

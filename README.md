@@ -48,7 +48,7 @@ $ cd /etc/apache2/mods-enabled
 $ sudo ln -s /etc/apache2/mods-available/pascal.conf
 $ sudo ln -s /etc/apache2/mods-available/pascal.load
 ```
-you can also use `a2enmod` command
+Alternatively, you can also use `a2enmod` command to enable mod_pascal.
 
 ```
 $ sudo a2enmod pascal

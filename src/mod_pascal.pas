@@ -59,7 +59,9 @@ exports
 
         cgienv.add('GATEWAY_INTERFACE=CGI/1.1');
         cgienv.add('SERVER_PROTOCOL=' + asString(req^.protocol));
-        cgienv.add('SERVER_NAME=CGI/1.1');
+        cgienv.add('SERVER_PORT=' + asString(ap_get_server_port(req)));
+        cgienv.add('SERVER_NAME=' + asString(ap_get_server_name(req)));
+        cgienv.add('SERVER_SOFTWARE=' + asString(ap_get_server_banner()));
         cgienv.add('PATH_INFO=' + asString(req^.path_info));
         cgienv.add('REQUEST_METHOD=' + asString(req^.method));
         cgienv.add('QUERY_STRING=' + asString(req^.args));
@@ -85,6 +87,7 @@ exports
         cgienv.add('HTTP_ACCEPT=' + asString(apr_table_get(req^.headers_in, 'Accept')));
         cgienv.add('HTTP_USER_AGENT=' + asString(apr_table_get(req^.headers_in, 'User-Agent')));
         cgienv.add('HTTP_X_REQUESTED_WITH=' + asString(apr_table_get(req^.headers_in, 'X-Requested-With')));
+        cgienv.add('HTTP_HOST=' + asString(apr_table_get(req^.headers_in, 'Host')));
         result := cgienv;
     end;
 

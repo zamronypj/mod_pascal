@@ -22,6 +22,7 @@ interface
         const fpcBin : string;
         const cacheDir : string;
         const filename : string;
+        const cgienv : TStrings;
         out compileOutput : string
     ) : integer;
 
@@ -58,6 +59,7 @@ const
         const fpcBin : string;
         const cacheDir : string;
         const filename : string;
+        const cgienv : TStrings;
         out compileOutput : string
     ) : integer;
     var afpcProc : TProcess;
@@ -70,6 +72,7 @@ const
                 afpcProc.executable := fpcBin;
                 afpcProc.parameters.add('--set-cache=' + cacheDir);
                 afpcProc.parameters.add(filename);
+                afpcProc.environment := cgienv;
                 afpcProc.Options := afpcProc.Options + [poUsePipes];
                 afpcProc.execute();
                 readOutput(afpcProc, outputStr);

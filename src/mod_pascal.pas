@@ -47,6 +47,8 @@ exports
     begin
         //ap_add_common_vars(req);
         //ap_add_cgi_vars(req);
+        cgiEnv.add('PATH=' + GetEnvironmentVariable('PATH'));
+
         cgienv.add('GATEWAY_INTERFACE=CGI/1.1');
 
         headerValue := asString(apr_table_get(req^.headers_in, 'Content-Type'));
@@ -61,14 +63,19 @@ exports
         cgienv.add('GATEWAY_INTERFACE=CGI/1.1');
         cgienv.add('SERVER_PROTOCOL=' + asString(req^.protocol));
         cgienv.add('SERVER_PORT=' + IntToStr(ap_get_server_port(req)));
-        cgienv.add('SERVER_NAME=' + asString(ap_get_server_name(req)));
-        cgienv.add('SERVER_SOFTWARE=' + asString(ap_get_server_banner()));
+        cgienv.add('SERVER_NAME=' + asString(ap_get_server_name_for_url(req)));
+
+        //ap_get_server_banner() returns gibberish data. not sure why. Encoding?
+        //cgienv.add('SERVER_SOFTWARE=' + asString(ap_get_server_banner()));
+        cgienv.add('SERVER_SOFTWARE=Apache');
+
         cgienv.add('PATH_INFO=' + asString(req^.path_info));
         cgienv.add('REQUEST_METHOD=' + asString(req^.method));
         cgienv.add('QUERY_STRING=' + asString(req^.args));
         cgienv.add('SCRIPT_NAME=' + asString(req^.filename));
         cgienv.add('PATH_TRANSLATED=' + asString(req^.filename));
-        cgienv.add('REMOTE_ADDR=' + asString(req^.connection^.remote_ip));
+        cgienv.add('REMOTE_ADDR=' + asString(req^.useragent_ip));
+
         cgienv.add('REMOTE_HOST=' + asString(
             ap_get_remote_host(
                 req^.connection,

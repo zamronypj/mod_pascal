@@ -20,7 +20,8 @@ uses
     apr,
     apr24,
     lib_consts,
-    instant_fpc;
+    instant_fpc,
+    lib_utils;
 
 var
 
@@ -30,16 +31,6 @@ exports
 
     pascalModule name MODULE_NAME;
 
-    function asString(avalue : pchar) : string;
-    begin
-        if avalue <> nil then
-        begin
-            result := strpas(avalue);
-        end else
-        begin
-            result := '';
-        end;
-    end;
 
     function buildCgiEnv(req: prequest_rec; const cgienv : TStrings) : TStrings;
     var headerValue : string;

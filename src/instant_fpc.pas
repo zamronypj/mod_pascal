@@ -24,6 +24,7 @@ uses
     -------------------------}
     function execProgram(
         const fpcBin : string;
+        const instantFpcBin : string;
         const cacheDir : string;
         const filename : string;
         const cgienv : TStrings;
@@ -60,6 +61,7 @@ const
 
     function execProgram(
         const fpcBin : string;
+        const instantFpcBin : string;
         const cacheDir : string;
         const filename : string;
         const cgienv : TStrings;
@@ -72,7 +74,8 @@ const
         try
             afpcProc := TProcess.create(nil);
             try
-                afpcProc.executable := fpcBin;
+                afpcProc.executable := instantFpcBin;
+                afpcProc.parameters.add('--compiler=' + fpcBin);
                 afpcProc.parameters.add('--set-cache=' + cacheDir);
                 afpcProc.parameters.add(filename);
                 afpcProc.environment := cgienv;

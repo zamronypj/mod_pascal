@@ -21,12 +21,14 @@ const
 
 
     {$IFDEF UNIX}
+        DEFAULT_FPC_BIN = '/usr/local/bin/fpc';
         DEFAULT_INSTANT_FPC_BIN = '/usr/local/bin/instantfpc';
         DEFAULT_CACHE_DIR = '/tmp';
     {$ENDIF}
 
     {$IFDEF WINDOWS}
-        DEFAULT_INSTANT_FPC_BIN = 'C:\fpc\bin\instantfpc';
+        DEFAULT_FPC_BIN = 'C:\fpc\bin\fpc.exe';
+        DEFAULT_INSTANT_FPC_BIN = 'C:\fpc\bin\instantfpc.exe';
         DEFAULT_CACHE_DIR = 'C:\Windows\Temp';
     {$ENDIF}
 

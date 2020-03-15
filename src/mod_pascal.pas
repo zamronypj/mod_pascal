@@ -98,10 +98,12 @@ exports
     ) : integer;
     var
         instantFpcBin : string;
+        fpcBin : string;
         cacheDir : string;
         cgienv : TStrings;
     begin
         //TODO: add ability to set from configuration
+        fpcBin := DEFAULT_FPC_BIN;
         instantFpcBin := DEFAULT_INSTANT_FPC_BIN;
         cacheDir := DEFAULT_CACHE_DIR;
 
@@ -109,6 +111,7 @@ exports
         cgienv := TStringList.create();
         try
             result := execProgram(
+                fpcBin,
                 instantFpcBin,
                 cacheDir,
                 req^.filename,

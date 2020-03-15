@@ -15,6 +15,7 @@ library mod_pascal;
 uses
 
     SysUtils,
+    Classes,
     httpd24,
     apr,
     apr24,
@@ -59,7 +60,7 @@ exports
 
         cgienv.add('GATEWAY_INTERFACE=CGI/1.1');
         cgienv.add('SERVER_PROTOCOL=' + asString(req^.protocol));
-        cgienv.add('SERVER_PORT=' + asString(ap_get_server_port(req)));
+        cgienv.add('SERVER_PORT=' + IntToStr(ap_get_server_port(req)));
         cgienv.add('SERVER_NAME=' + asString(ap_get_server_name(req)));
         cgienv.add('SERVER_SOFTWARE=' + asString(ap_get_server_banner()));
         cgienv.add('PATH_INFO=' + asString(req^.path_info));
@@ -155,14 +156,7 @@ exports
             exit;
         end;
 
-        //TODO: setup CGI Environment variable
-
-        execProgram(
-            instantFpcBin,
-            cacheDir,
-            req^.filename,
-            compileOutput
-        );
+        executeProgram(req, compileOutput);
 
         //TODO: setup HTTP response header
 

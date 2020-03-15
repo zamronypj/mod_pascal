@@ -14,6 +14,10 @@ interface
 {$MODE OBJFPC}
 {$H+}
 
+uses
+
+    Classes;
+
     {------------------------
      run program source using
      InstantFPC
@@ -30,7 +34,6 @@ implementation
 
 uses
 
-    Classes,
     SysUtils,
     process;
 

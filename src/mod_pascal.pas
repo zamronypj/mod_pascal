@@ -105,7 +105,6 @@ exports
         instantFpcBin := DEFAULT_INSTANT_FPC_BIN;
         cacheDir := DEFAULT_CACHE_DIR;
 
-        //TODO: setup CGI Environment variable
         cgienv := TStringList.create();
         try
             result := execProgram(

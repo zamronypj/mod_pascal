@@ -18,3 +18,5 @@ bin/unit/*
 *.so
 *.o
 *.ppu
+
+.vscode

@@ -135,7 +135,7 @@ exports
 
     function buildResponseHeader(req : prequest_rec; var compileOutput : string) : integer;
     var headerParts : string;
-        headerMarkerPos : integer;
+        i, headerMarkerPos : integer;
         headers : TStringArray;
         keyval : TStringArray;
         key, val : string;
@@ -153,14 +153,18 @@ exports
             val := trim(keyval[1]);
             if sameText(key, 'Status') then
             begin
-                result := StrtoInt(val);
+                result := strtoInt(val);
+            end else
+            if sameText(key, 'Content-Type') then
+            begin
+                ap_set_content_type(req, pchar(val));
             end else
             begin
-                apr_table_set(req^.headers_out, pchar(key), pchar(val));
+                apr_table_setn(req^.headers_out, pchar(key), pchar(val));
             end;
         end;
         //remove header part
-        compileOutput := copy(compileOutput, headerMarkerPos, length(compileOutput) - length(headreParts));
+        compileOutput := copy(compileOutput, headerMarkerPos + 2, length(compileOutput) - length(headerParts));
     end;
 
     {----------------------------------------------

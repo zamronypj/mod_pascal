@@ -36,34 +36,24 @@ exports
     var
         headers : papr_array_header_t;
         headersEntry : papr_table_entry_t;
-        headerEnv : string;
+        headerEnv, key : string;
         i : integer;
     begin
         headers := apr_table_elts(req^.headers_in);
         headersEntry := papr_table_entry_t(headers^.elts);
         for i := 0 to headers^.nelts - 1 do
         begin
-            //transform for example Content-Encoding into HTTP_CONTENT_ENCODING
-            headerEnv := 'HTTP_' +
-                UpperCase(
-                    StringReplace(
-                        asString(headersEntry^.key), '-', '_', [rfReplaceAll]
-                    )
-                );
-            cgienv.add(headerEnv + '=' + asString(headersEntry^.val));
+            key := asString(headersEntry^.key);
+            //skip Content-Type and Content-Length as this will be set in CGI Environment
+            if not (SameText(key, 'Content-Type') or SameText(key, 'Content-Length')) then
+            begin
+                //transform for example Content-Encoding into HTTP_CONTENT_ENCODING
+                headerEnv := 'HTTP_' + upperCase(stringReplace(key, '-', '_', [rfReplaceAll]));
+                cgienv.add(headerEnv + '=' + asString(headersEntry^.val));
+            end;
             inc(headersEntry);
         end;
 
-        // headerValue := asString(apr_table_get(req^.headers_in, 'Content-Encoding'));
-        // if (headerValue = '') then
-        // begin
-        //     headerValue := asString(req^.content_encoding);
-        // end;
-        // cgienv.add('HTTP_CONTENT_ENCODING=' + headerValue);
-        // cgienv.add('HTTP_ACCEPT=' + asString(apr_table_get(req^.headers_in, 'Accept')));
-        // cgienv.add('HTTP_USER_AGENT=' + asString(apr_table_get(req^.headers_in, 'User-Agent')));
-        // cgienv.add('HTTP_X_REQUESTED_WITH=' + asString(apr_table_get(req^.headers_in, 'X-Requested-With')));
-        // cgienv.add('HTTP_HOST=' + asString(apr_table_get(req^.headers_in, 'Host')));
         result := cgienv;
     end;
 
@@ -71,8 +61,6 @@ exports
     var headerValue : string;
         isStrIp : integer;
     begin
-        //ap_add_common_vars(req);
-        //ap_add_cgi_vars(req);
         cgiEnv.add('PATH=' + GetEnvironmentVariable('PATH'));
 
         cgienv.add('GATEWAY_INTERFACE=CGI/1.1');

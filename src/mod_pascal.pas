@@ -23,9 +23,21 @@ uses
     instant_fpc,
     lib_utils;
 
+type
+
+    TPascalParams = array[0..2] of command_rec;
+
+    TPascalModuleCfg = record
+        fpcBin : string;
+        instantfpcBin : string;
+        cacheDir : string;
+    end;
+
 var
 
     pascalModule: module;{$IFDEF UNIX} public name MODULE_NAME;{$ENDIF}
+    pascalParams : TPascalParams;
+    moduleCfg : TPascalModuleCfg;
 
 exports
 
@@ -111,22 +123,14 @@ exports
         out compileOutput : string
     ) : integer;
     var
-        instantFpcBin : string;
-        fpcBin : string;
-        cacheDir : string;
         cgienv : TStrings;
     begin
-        //TODO: add ability to set from configuration
-        fpcBin := DEFAULT_FPC_BIN;
-        instantFpcBin := DEFAULT_INSTANT_FPC_BIN;
-        cacheDir := DEFAULT_CACHE_DIR;
-
         cgienv := TStringList.create();
         try
             result := execProgram(
-                fpcBin,
-                instantFpcBin,
-                cacheDir,
+                moduleCfg.fpcBin,
+                moduleCfg.instantFpcBin,
+                moduleCfg.cacheDir,
                 req^.filename,
                 buildCgiEnv(req, cgienv),
                 compileOutput
@@ -134,7 +138,6 @@ exports
         finally
             cgienv.free();
         end;
-
     end;
 
     {----------------------------------------------
@@ -194,17 +197,53 @@ exports
         ap_hook_handler(@pascalHandler, nil, nil, APR_HOOK_MIDDLE);
     end;
 
+    {----------------------------------------------
+       set fpc executable binary path from config
+    -----------------------------------------------}
+    function setFpcBin(parms: Pcmd_parms; mconfig: pointer; arg: Pchar): Pchar; cdecl;
+    begin
+        moduleCfg.fpcBin := asString(arg);
+        result := nil;
+    end;
+
+    {----------------------------------------------
+       set instantfpc executable binary path from config
+    -----------------------------------------------}
+    function setInstantFpcBin(parms: Pcmd_parms; mconfig: pointer; arg: Pchar): Pchar; cdecl;
+    begin
+        moduleCfg.instantfpcBin := asString(arg);
+        result := nil;
+    end;
+
+    {----------------------------------------------
+       set isntantfpc cache directory from config
+    -----------------------------------------------}
+    function setInstantFpcCacheDir(parms: Pcmd_parms; mconfig: pointer; arg: Pchar): Pchar; cdecl;
+    begin
+        moduleCfg.cacheDir := asString(arg);
+        result := nil;
+    end;
+
 begin
+    {---------------------------------------------------
+        Module configuration initialization code
+    ----------------------------------------------------}
+    //set default value
+    moduleCfg.fpcBin := DEFAULT_FPC_BIN;
+    moduleCfg.instantFpcBin := DEFAULT_INSTANT_FPC_BIN;
+    moduleCfg.cacheDir := DEFAULT_CACHE_DIR;
+
+    fillChar(pascalParams, sizeOf(pascalParams), 0);
+    pascalParams[0] := AP_INIT_TAKE1('FpcBin', @setFpcBin, nil, RSRC_CONF, 'fpc binary executable path');
+    pascalParams[1] := AP_INIT_TAKE1('InstantFpcBin', @setInstantFpcBin, nil, RSRC_CONF, 'instantfpc binary executable path');
+    pascalParams[2] := AP_INIT_TAKE1('InstantFpcCacheDir', @setInstantFpcCacheDir, nil, RSRC_CONF, 'instantfpc cache directory');
+
     {---------------------------------------------------
         Library initialization code
     ----------------------------------------------------}
     fillChar(pascalModule, sizeOf(pascalModule), 0);
-
     STANDARD20_MODULE_STUFF(pascalModule);
-
-    with pascalModule do
-    begin
-        name := MODULE_NAME;
-        register_hooks := @registerPascalHooks;
-    end;
+    pascalModule.name := MODULE_NAME;
+    pascalModule.register_hooks := @registerPascalHooks;
+    pascalModule.cmds := @pascalParams;
 end.

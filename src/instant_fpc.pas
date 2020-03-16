@@ -78,6 +78,7 @@ const
                 afpcProc.parameters.add('--compiler=' + fpcBin);
                 afpcProc.parameters.add('--set-cache=' + cacheDir);
                 afpcProc.parameters.add(filename);
+                //TODO: set StdInput for pascal program
                 afpcProc.environment := cgienv;
                 afpcProc.Options := afpcProc.Options + [poUsePipes];
                 afpcProc.execute();

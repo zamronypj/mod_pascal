@@ -76,3 +76,18 @@ If `test.pas` is downloaded then you do not register mod_pascal with Apache corr
 ## CGI environment variables
 
 From inside pascal program, [CGI environment variables](https://tools.ietf.org/html/rfc3875#section-4) can be read using `getEnvironmentVariable()`, `getEnvironmentVariableCount()` and `getEnvironmentString()` functions which is declared in `SysUtils` unit.
+
+## More module configuration
+
+By default, when not set, it is assumed that Free Pascal compiler path is
+`/usr/local/bin/fpc`, InstantFPC path is `/usr/local/bin/instantfpc` and cache directory
+in `/tmp`. You can set it to match your system as follows
+
+```
+<IfModule pascal_module>
+    AddHandler pascal-handler .pas
+    FpcBin /path/to/fpc
+    InstantFpcBin /path/to/instantfpc
+    InstantFpcCacheDir /path/to/cache/dir
+</IfModule>
+```

@@ -73,9 +73,63 @@ Open URL http://localhost/test.pas from Internet browser, you should see text `H
 
 If `test.pas` is downloaded then you do not register mod_pascal with Apache correctly.
 
+To return response with header, add header line separated by newline
+
+```
+begin
+    writeln('Content-Type : text/html');
+    writeln();
+    writeln('<h1>Hello from Pascal</h1>');
+end.
+```
+
+Please note that because blank newline is used to mark end of header parts of response, for safety always add them even if you do not want to set response header. For example
+
+```
+begin
+    writeln();
+    writeln();
+    writeln('<h1>Hello from Pascal</h1>');
+end.
+```
+
+This will cause incorrect response
+
+```
+begin
+    writeln('<h1>Hello from Pascal</h1>');
+    writeln();
+    writeln('test');
+end.
+```
+
+To fix it
+
+```
+begin
+    writeln('<h1>Hello from Pascal</h1>');
+    writeln();
+    writeln('test');
+end.
+```
+
 ## CGI environment variables
 
 From inside pascal program, [CGI environment variables](https://tools.ietf.org/html/rfc3875#section-4) can be read using `getEnvironmentVariable()`, `getEnvironmentVariableCount()` and `getEnvironmentString()` functions which is declared in `SysUtils` unit. For example,
+
+```
+uses sysutils;
+var
+    i:integer;
+begin
+    writeln('<ul>');
+    for i:= 1 to getEnvironmentVariableCount do
+    begin
+        writeln('<li>', getEnvironmentString(i), '</li>');
+    end;
+    writeln('</ul>');
+end.
+```
 
 ## More module configuration
 

@@ -1,6 +1,6 @@
 # mod_pascal
 
-Apache 2.4 module implementation which is capable to execute Pascal program just like scripting language.
+Apache 2.4 module implementation which is capable to execute Pascal program just like scripting language. [Read mod_pascal documentation](https://zamronypj.github.io/mod_pascal).
 
 ## Requirement
 
@@ -72,24 +72,3 @@ end.
 Open URL http://localhost/test.pas from Internet browser, you should see text `Hello from Pascal` printed in browser.
 
 If `test.pas` is downloaded then you do not register mod_pascal with Apache correctly.
-
-## CGI environment variables
-
-From inside pascal program, [CGI environment variables](https://tools.ietf.org/html/rfc3875#section-4) can be read using `getEnvironmentVariable()`, `getEnvironmentVariableCount()` and `getEnvironmentString()` functions which is declared in `SysUtils` unit. For example,
-
-## More module configuration
-
-By default, when not set, it is assumed that Free Pascal compiler path is
-`/usr/local/bin/fpc`, InstantFPC path is `/usr/local/bin/instantfpc` and cache directory
-in `/tmp`. You can set it to match your system as follows
-
-```
-<IfModule pascal_module>
-    AddHandler pascal-handler .pas
-    FpcBin /path/to/fpc
-    InstantFpcBin /path/to/instantfpc
-    InstantFpcCacheDir /path/to/cache/dir
-</IfModule>
-```
-
-You need to make sure that cache directory is writeable by web server.

@@ -32,6 +32,41 @@ exports
     pascalModule name MODULE_NAME;
 
 
+    function buildHttpEnv(req: prequest_rec; const cgienv : TStrings) : TStrings;
+    var
+        headers : papr_array_header_t;
+        headersEntry : papr_table_entry_t;
+        headerEnv : string;
+        i : integer;
+    begin
+        headers := apr_table_elts(req^.headers_in);
+        headersEntry := papr_table_entry_t(headers^.elts);
+        for i := 0 to headers^.nelts - 1 do
+        begin
+            //transform for example Content-Encoding into HTTP_CONTENT_ENCODING
+            headerEnv := 'HTTP_' +
+                UpperCase(
+                    StringReplace(
+                        asString(headersEntry^.key), '-', '_', [rfReplaceAll]
+                    )
+                );
+            cgienv.add(headerEnv + '=' + asString(headersEntry^.val));
+            inc(headersEntry);
+        end;
+
+        // headerValue := asString(apr_table_get(req^.headers_in, 'Content-Encoding'));
+        // if (headerValue = '') then
+        // begin
+        //     headerValue := asString(req^.content_encoding);
+        // end;
+        // cgienv.add('HTTP_CONTENT_ENCODING=' + headerValue);
+        // cgienv.add('HTTP_ACCEPT=' + asString(apr_table_get(req^.headers_in, 'Accept')));
+        // cgienv.add('HTTP_USER_AGENT=' + asString(apr_table_get(req^.headers_in, 'User-Agent')));
+        // cgienv.add('HTTP_X_REQUESTED_WITH=' + asString(apr_table_get(req^.headers_in, 'X-Requested-With')));
+        // cgienv.add('HTTP_HOST=' + asString(apr_table_get(req^.headers_in, 'Host')));
+        result := cgienv;
+    end;
+
     function buildCgiEnv(req: prequest_rec; const cgienv : TStrings) : TStrings;
     var headerValue : string;
         isStrIp : integer;
@@ -77,17 +112,7 @@ exports
         ));
 
         //HTTP protocol specific
-        headerValue := asString(apr_table_get(req^.headers_in, 'Content-Encoding'));
-        if (headerValue = '') then
-        begin
-            headerValue := asString(req^.content_encoding);
-        end;
-        cgienv.add('HTTP_CONTENT_ENCODING=' + headerValue);
-        cgienv.add('HTTP_ACCEPT=' + asString(apr_table_get(req^.headers_in, 'Accept')));
-        cgienv.add('HTTP_USER_AGENT=' + asString(apr_table_get(req^.headers_in, 'User-Agent')));
-        cgienv.add('HTTP_X_REQUESTED_WITH=' + asString(apr_table_get(req^.headers_in, 'X-Requested-With')));
-        cgienv.add('HTTP_HOST=' + asString(apr_table_get(req^.headers_in, 'Host')));
-        result := cgienv;
+        result := buildHttpEnv(req, cgienv);
     end;
 
     function executeProgram(

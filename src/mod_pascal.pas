@@ -17,7 +17,6 @@ uses
     SysUtils,
     Classes,
     httpd24,
-    apr,
     apr24,
     lib_consts,
     instant_fpc,
@@ -71,13 +70,8 @@ exports
 
     function buildCgiEnv(req: prequest_rec; const cgienv : TStrings) : TStrings;
     var headerValue : string;
-        isStrIp : integer;
+       isStrIp : integer;
     begin
-        //following functions is somehow commented from Free Pascal httpd24
-        //not sure why
-        //ap_add_common_vars(req);
-        //ap_add_cgi_vars(req);
-
         cgiEnv.add('PATH=' + GetEnvironmentVariable('PATH'));
         cgienv.add('GATEWAY_INTERFACE=CGI/1.1');
         headerValue := asString(apr_table_get(req^.headers_in, 'Content-Type'));
@@ -89,7 +83,6 @@ exports
 
         cgienv.add('CONTENT_LENGTH=' + asString(apr_table_get(req^.headers_in, 'Content-Length')));
 
-        cgienv.add('GATEWAY_INTERFACE=CGI/1.1');
         cgienv.add('SERVER_PROTOCOL=' + asString(req^.protocol));
         cgienv.add('SERVER_PORT=' + IntToStr(ap_get_server_port(req)));
         cgienv.add('SERVER_NAME=' + asString(ap_get_server_name_for_url(req)));

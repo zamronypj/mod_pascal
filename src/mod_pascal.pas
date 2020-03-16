@@ -61,10 +61,13 @@ exports
     var headerValue : string;
         isStrIp : integer;
     begin
+        //following functions is somehow commented from Free Pascal httpd24
+        //not sure why
+        //ap_add_common_vars(req);
+        //ap_add_cgi_vars(req);
+
         cgiEnv.add('PATH=' + GetEnvironmentVariable('PATH'));
-
         cgienv.add('GATEWAY_INTERFACE=CGI/1.1');
-
         headerValue := asString(apr_table_get(req^.headers_in, 'Content-Type'));
         if (headerValue = '') then
         begin
@@ -99,7 +102,7 @@ exports
             )
         ));
 
-        //HTTP protocol specific
+        //HTTP protocol specific environment
         result := buildHttpEnv(req, cgienv);
     end;
 

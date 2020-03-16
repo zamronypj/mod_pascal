@@ -83,7 +83,7 @@ begin
 end.
 ```
 
-Please note that because blank newline is used to mark end of header parts of response, for safety always add them even if you do not want to set response header. For example
+Please note that because blank newline is used to mark end of header parts of response, for safety, always add them even if you do not want to set response header. For example
 
 ```
 begin
@@ -97,18 +97,18 @@ Code below will cause incorrect response
 
 ```
 begin
-    writeln();
-    writeln();
     writeln('<h1>Hello from Pascal</h1>');
     writeln();
     writeln('test');
 end.
 ```
 
-To fix it, add blank newline
+To fix it, add blank newline at beginning,
 
 ```
 begin
+    writeln();
+    writeln();
     writeln('<h1>Hello from Pascal</h1>');
     writeln();
     writeln('test');

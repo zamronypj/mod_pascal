@@ -75,7 +75,21 @@ If `test.pas` is downloaded then you do not register mod_pascal with Apache corr
 
 ## CGI environment variables
 
-From inside pascal program, [CGI environment variables](https://tools.ietf.org/html/rfc3875#section-4) can be read using `getEnvironmentVariable()`, `getEnvironmentVariableCount()` and `getEnvironmentString()` functions which is declared in `SysUtils` unit.
+From inside pascal program, [CGI environment variables](https://tools.ietf.org/html/rfc3875#section-4) can be read using `getEnvironmentVariable()`, `getEnvironmentVariableCount()` and `getEnvironmentString()` functions which is declared in `SysUtils` unit. For example,
+
+```
+uses sysutils;
+var
+    i:integer;
+begin
+    writeln('<ul>');
+    for i:= 1 to getEnvironmentVariableCount do
+    begin
+        writeln('<li>', getEnvironmentString(i), '</li>');
+    end;
+    writeln('</ul>');
+end.
+```
 
 ## More module configuration
 

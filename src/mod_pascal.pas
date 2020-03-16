@@ -133,6 +133,36 @@ exports
         end;
     end;
 
+    function buildResponseHeader(req : prequest_rec; var compileOutput : string) : integer;
+    var headerParts : string;
+        headerMarkerPos : integer;
+        headers : TStringArray;
+        keyval : TStringArray;
+        key, val : string;
+    begin
+        result := OK;
+        //TODO: not very performant string operation. lot of string copies.
+        //need to improve by avoiding it
+        headerMarkerPos := pos(LineEnding+LineEnding, compileOutput);
+        headerParts := copy(compileOutput, 1, headerMarkerPos - 1);
+        headers := headerParts.split(LineEnding);
+        for i:= 0 to Length(headers) - 1 do
+        begin
+            keyval := headers[i].split(':');
+            key := trim(keyval[0]);
+            val := trim(keyval[1]);
+            if sameText(key, 'Status') then
+            begin
+                result := StrtoInt(val);
+            end else
+            begin
+                apr_table_set(req^.headers_out, pchar(key), pchar(val));
+            end;
+        end;
+        //remove header part
+        compileOutput := copy(compileOutput, headerMarkerPos, length(compileOutput) - length(headreParts));
+    end;
+
     {----------------------------------------------
       Handles apache requests
       @param req Apache request
@@ -174,11 +204,9 @@ exports
             exit;
         end;
 
-        //TODO: setup HTTP response header
+        result := buildResponseHeader(req, compileOutput);
 
         ap_rwrite(pchar(compileOutput), length(compileOutput), req);
-
-        result := OK;
     end;
 
     {----------------------------------------------

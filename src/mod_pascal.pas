@@ -172,7 +172,11 @@ exports
             exit;
         end;
 
-        executeProgram(req, compileOutput);
+        if (executeProgram(req, compileOutput) <> 0) then
+        begin
+            result := HTTP_INTERNAL_SERVER_ERROR;
+            exit;
+        end;
 
         //TODO: setup HTTP response header
 

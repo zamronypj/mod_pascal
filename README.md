@@ -72,3 +72,7 @@ end.
 Open URL http://localhost/test.pas from Internet browser, you should see text `Hello from Pascal` printed in browser.
 
 If  `test.pas` is downloaded then you do not register mod_pascal with Apache correctly.
+
+## CGI environment variables
+
+From inside pascal program, [CGI environment variables](https://tools.ietf.org/html/rfc3875#section-4) can be read using `getEnvironmentVariable()`, `getEnvironmentVariableCount()` and `getEnvironmentString()` functions which is declared in `SysUtils` unit.

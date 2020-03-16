@@ -105,3 +105,5 @@ in `/tmp`. You can set it to match your system as follows
     InstantFpcCacheDir /path/to/cache/dir
 </IfModule>
 ```
+
+You need to make sure that cache directory is writeable by web server.

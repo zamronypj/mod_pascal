@@ -93,17 +93,19 @@ begin
 end.
 ```
 
-This will cause incorrect response
+Code below will cause incorrect response
 
 ```
 begin
+    writeln();
+    writeln();
     writeln('<h1>Hello from Pascal</h1>');
     writeln();
     writeln('test');
 end.
 ```
 
-To fix it
+To fix it, add blank newline
 
 ```
 begin

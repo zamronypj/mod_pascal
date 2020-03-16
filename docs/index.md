@@ -148,4 +148,4 @@ in `/tmp`. You can set it to match your system as follows
 </IfModule>
 ```
 
-You need to make sure that cache directory is writeable by web server.
+You need to make sure that cache directory is writeable by web server. After make any changes, restart Apache server.

@@ -282,7 +282,7 @@ exports
     end;
 
     {----------------------------------------------
-       set isntantfpc cache directory from config
+       set instantfpc cache directory from config
     -----------------------------------------------}
     function setInstantFpcCacheDir(parms: Pcmd_parms; mconfig: pointer; arg: Pchar): Pchar; cdecl;
     begin

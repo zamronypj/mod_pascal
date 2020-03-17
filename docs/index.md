@@ -149,7 +149,13 @@ Connection: keep-alive
 
 test=hello&id=12345&user=myuser%40example.com
 ```
-`CONTENT_LENGTH` environment variable will contains string `45` which means there is 45 bytes of data in STDIN available to read. If content length is greater than 0, your application needs to read it even if you do not require it.
+`CONTENT_LENGTH` environment variable will contains string `45` which means there is 45 bytes of data in STDIN available to read which is equal to length of string,
+
+```
+test=hello&id=12345&user=myuser%40example.com
+```
+
+If content length is greater than 0, your application needs to read it even if you do not require it.
 
 ```
 uses

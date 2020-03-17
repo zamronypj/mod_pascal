@@ -133,6 +133,48 @@ begin
 end.
 ```
 
+## Request body
+
+Any request body can be read from STDIN. `CONTENT_LENGTH` environment variable will contains total bytes of request body. For example, if you send following request,
+
+```
+POST /test.pas HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Accept: */*
+Cache-Control: no-cache
+Host: localhost
+Accept-Encoding: gzip, deflate, br
+Content-Length: 45
+Connection: keep-alive
+
+test=hello&id=12345&user=myuser%40example.com
+```
+`CONTENT_LENGTH` environment variable will contains string `45` which means there is 45 bytes of data in STDIN available to read. If content length is greater than 0, your application needs to read it even if you do not require it.
+
+```
+uses
+    sysutils;
+
+var
+    contentLen : integer;
+    requestBody : string;
+    ch : char;
+begin
+    writeln('Request body:');
+    contentLen := strToInt(getEnvironmentVariable('CONTENT_LENGTH'));
+    if contentLen <> 0 then
+    begin
+        requestBody := '';
+        repeat
+            read(ch);
+            requestBody := requestBody + ch;
+            dec(contentLen);
+        until contentLen = 0;
+        writeln(requestBody);
+    end;
+end.
+```
+
 ## More module configuration
 
 By default, when not set, it is assumed that Free Pascal compiler path is

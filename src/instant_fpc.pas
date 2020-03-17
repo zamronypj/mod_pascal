@@ -16,40 +16,38 @@ interface
 
 uses
 
-    Classes;
-
-    {------------------------
-     run program source using
-     InstantFPC
-    -------------------------}
-    function execProgram(
-        const fpcBin : string;
-        const instantFpcBin : string;
-        const cacheDir : string;
-        const filename : string;
-        const cgienv : TStrings;
-        out compileOutput : string
-    ) : integer;
-
-implementation
-
-uses
-
-    SysUtils,
+    Classes,
     process;
 
 const
 
     BUFF_SIZE = 2048;
 
-    procedure readOutput(const proc : TProcess; const outputStr : TStream);
+    procedure initProgram(
+        const afpcProc : TProcess;
+        const fpcBin : string;
+        const instantFpcBin : string;
+        const cacheDir : string;
+        const filename : string;
+        const cgienv : TStrings
+    );
+
+    function readProgramOutput(const afpcProc : TProcess) : string;
+
+implementation
+
+uses
+
+    SysUtils;
+
+    procedure readOutput(const procOut : TStream; const outputStr : TStream);
     var bytesRead : integer;
         buff : pointer;
     begin
         getMem(buff, BUFF_SIZE);
         try
             repeat
-                bytesRead := proc.Output.read(buff^, BUFF_SIZE);
+                bytesRead := procOut.read(buff^, BUFF_SIZE);
                 //TODO: handle timeout when process taking too
                 //much time to complete
                 outputStr.writeBuffer(buff^, bytesRead);
@@ -59,35 +57,31 @@ const
         end;
     end;
 
-    function execProgram(
+    procedure initProgram(
+        const afpcProc : TProcess;
         const fpcBin : string;
         const instantFpcBin : string;
         const cacheDir : string;
         const filename : string;
-        const cgienv : TStrings;
-        out compileOutput : string
-    ) : integer;
-    var afpcProc : TProcess;
+        const cgienv : TStrings
+    );
+    begin
+        afpcProc.executable := instantFpcBin;
+        afpcProc.parameters.add('--compiler=' + fpcBin);
+        afpcProc.parameters.add('--set-cache=' + cacheDir);
+        afpcProc.parameters.add(filename);
+        afpcProc.environment := cgienv;
+        afpcProc.Options := afpcProc.Options + [poUsePipes];
+    end;
+
+    function readProgramOutput(const afpcProc : TProcess) : string;
+    var
         outputStr : TStringStream;
     begin
         outputStr := TStringStream.create('');
         try
-            afpcProc := TProcess.create(nil);
-            try
-                afpcProc.executable := instantFpcBin;
-                afpcProc.parameters.add('--compiler=' + fpcBin);
-                afpcProc.parameters.add('--set-cache=' + cacheDir);
-                afpcProc.parameters.add(filename);
-                //TODO: set StdInput for pascal program
-                afpcProc.environment := cgienv;
-                afpcProc.Options := afpcProc.Options + [poUsePipes];
-                afpcProc.execute();
-                readOutput(afpcProc, outputStr);
-                compileOutput := outputStr.dataString;
-                result := afpcProc.exitCode;
-            finally
-                afpcProc.free();
-            end;
+            readOutput(afpcProc.output, outputStr);
+            result := outputStr.dataString;
         finally
             outputStr.free();
         end;

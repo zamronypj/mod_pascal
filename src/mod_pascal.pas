@@ -16,6 +16,7 @@ uses
 
     SysUtils,
     Classes,
+    process,
     httpd24,
     apr24,
     lib_consts,
@@ -111,23 +112,56 @@ exports
         result := buildHttpEnv(req, cgienv);
     end;
 
+    procedure writeInput(req:prequest_rec; const inputStr : TStream);
+    var bytesRead : integer;
+        buff : pointer;
+    begin
+        getMem(buff, BUFF_SIZE);
+        try
+            if ap_setup_client_block(req, REQUEST_CHUNKED_DECHUNK) <> OK then
+            begin
+                exit;
+            end;
+
+            if (ap_should_client_block(req) = 1) then
+            begin
+                repeat
+                    bytesRead := ap_get_client_block(req, buff, BUFF_SIZE);
+                    inputStr.writeBuffer(buff^, bytesRead);
+                until bytesRead = 0;
+            end;
+        finally
+            freeMem(buff);
+        end;
+    end;
+
     function executeProgram(
         req: prequest_rec;
         out compileOutput : string
     ) : integer;
     var
         cgienv : TStrings;
+        proc : TProcess;
     begin
         cgienv := TStringList.create();
         try
-            result := execProgram(
-                moduleCfg.fpcBin,
-                moduleCfg.instantFpcBin,
-                moduleCfg.cacheDir,
-                req^.filename,
-                buildCgiEnv(req, cgienv),
-                compileOutput
-            );
+            proc := TProcess.create(nil);
+            try
+                initProgram(
+                    proc,
+                    moduleCfg.fpcBin,
+                    moduleCfg.instantFpcBin,
+                    moduleCfg.cacheDir,
+                    req^.filename,
+                    buildCgiEnv(req, cgienv)
+                );
+                proc.execute();
+                writeInput(req, proc.Input);
+                compileOutput := readProgramOutput(proc);
+                result := proc.exitCode;
+            finally
+                proc.free();
+            end;
         finally
             cgienv.free();
         end;

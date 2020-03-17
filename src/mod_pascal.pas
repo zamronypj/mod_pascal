@@ -93,6 +93,7 @@ exports
         cgienv.add('SERVER_SOFTWARE=Apache');
 
         cgienv.add('PATH_INFO=' + asString(req^.path_info));
+        cgienv.add('REQUEST_URI=' + asString(req^.uri));
         cgienv.add('REQUEST_METHOD=' + asString(req^.method));
         cgienv.add('QUERY_STRING=' + asString(req^.args));
         cgienv.add('SCRIPT_NAME=' + asString(req^.filename));
@@ -112,7 +113,7 @@ exports
         result := buildHttpEnv(req, cgienv);
     end;
 
-    procedure writeInput(req:prequest_rec; const inputStr : TStream);
+    procedure readRequestBody(req : prequest_rec; const bodyStr : TStream);
     var bytesRead : integer;
         buff : pointer;
     begin
@@ -127,7 +128,7 @@ exports
             begin
                 repeat
                     bytesRead := ap_get_client_block(req, buff, BUFF_SIZE);
-                    inputStr.writeBuffer(buff^, bytesRead);
+                    bodyStr.writeBuffer(buff^, bytesRead);
                 until bytesRead = 0;
             end;
         finally
@@ -156,7 +157,8 @@ exports
                     buildCgiEnv(req, cgienv)
                 );
                 proc.execute();
-                writeInput(req, proc.Input);
+                //read request body and pipe it into instantfpc STDIN
+                readRequestBody(req, proc.Input);
                 compileOutput := readProgramOutput(proc);
                 result := proc.exitCode;
             finally
@@ -198,7 +200,7 @@ exports
             end;
         end;
         //remove header part
-        compileOutput := copy(compileOutput, headerMarkerPos + 2, length(compileOutput) - length(headerParts));
+        compileOutput := copy(compileOutput, headerMarkerPos + 1, length(compileOutput) - length(headerParts));
     end;
 
     {----------------------------------------------

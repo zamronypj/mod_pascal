@@ -200,7 +200,7 @@ You need to make sure that cache directory is writeable by web server. After mak
 
 ## Compiler configuration
 
-You can set any compiler configuration by creating `fpc.cfg` file in directory where pascal program resides. For example,
+You can set any compiler configurations by creating `fpc.cfg` file in directory where pascal program resides. For example with content as follows,
 
 ```
 # add configuration from default configuration 

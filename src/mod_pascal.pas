@@ -23,9 +23,15 @@ uses
     instant_fpc,
     lib_utils;
 
+const
+
+    FPC_BIN_PARAM = 0;
+    INSTANTFPC_BIN_PARAM = 1;
+    CACHEDIR_PARAM = 2;
+
 type
 
-    TPascalParams = array[0..2] of command_rec;
+    TPascalParams = array[FPC_BIN_PARAM..CACHEDIR_PARAM] of command_rec;
 
     TPascalModuleCfg = record
         fpcBin : string;
@@ -295,9 +301,9 @@ begin
     moduleCfg.cacheDir := DEFAULT_CACHE_DIR;
 
     fillChar(pascalParams, sizeOf(pascalParams), 0);
-    pascalParams[0] := AP_INIT_TAKE1('FpcBin', @setFpcBin, nil, RSRC_CONF, 'fpc binary executable path');
-    pascalParams[1] := AP_INIT_TAKE1('InstantFpcBin', @setInstantFpcBin, nil, RSRC_CONF, 'instantfpc binary executable path');
-    pascalParams[2] := AP_INIT_TAKE1('InstantFpcCacheDir', @setInstantFpcCacheDir, nil, RSRC_CONF, 'instantfpc cache directory');
+    pascalParams[FPC_BIN_PARAM] := AP_INIT_TAKE1('FpcBin', @setFpcBin, nil, RSRC_CONF, 'fpc binary executable path');
+    pascalParams[INSTANTFPC_BIN_PARAM] := AP_INIT_TAKE1('InstantFpcBin', @setInstantFpcBin, nil, RSRC_CONF, 'instantfpc binary executable path');
+    pascalParams[CACHEDIR_PARAM] := AP_INIT_TAKE1('InstantFpcCacheDir', @setInstantFpcCacheDir, nil, RSRC_CONF, 'instantfpc cache directory');
 
     {---------------------------------------------------
         Library initialization code

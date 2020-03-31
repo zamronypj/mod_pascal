@@ -32,5 +32,9 @@ const
         DEFAULT_CACHE_DIR = 'C:\Windows\Temp';
     {$ENDIF}
 
+    FPC_BIN_PARAM = 0;
+    INSTANTFPC_BIN_PARAM = 1;
+    CACHEDIR_PARAM = 2;
+
 implementation
 end.

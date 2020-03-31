@@ -23,12 +23,6 @@ uses
     instant_fpc,
     lib_utils;
 
-const
-
-    FPC_BIN_PARAM = 0;
-    INSTANTFPC_BIN_PARAM = 1;
-    CACHEDIR_PARAM = 2;
-
 type
 
     TPascalParams = array[FPC_BIN_PARAM..CACHEDIR_PARAM] of command_rec;

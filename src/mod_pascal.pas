@@ -301,9 +301,26 @@ begin
     moduleCfg.cacheDir := DEFAULT_CACHE_DIR;
 
     fillChar(pascalParams, sizeOf(pascalParams), 0);
-    pascalParams[FPC_BIN_PARAM] := AP_INIT_TAKE1('FpcBin', @setFpcBin, nil, RSRC_CONF, 'fpc binary executable path');
-    pascalParams[INSTANTFPC_BIN_PARAM] := AP_INIT_TAKE1('InstantFpcBin', @setInstantFpcBin, nil, RSRC_CONF, 'instantfpc binary executable path');
-    pascalParams[CACHEDIR_PARAM] := AP_INIT_TAKE1('InstantFpcCacheDir', @setInstantFpcCacheDir, nil, RSRC_CONF, 'instantfpc cache directory');
+    pascalParams[FPC_BIN_PARAM] := AP_INIT_TAKE1(
+        'FpcBin',
+        @setFpcBin,
+        nil,
+        RSRC_CONF,
+        'fpc binary executable path'
+    );
+    pascalParams[INSTANTFPC_BIN_PARAM] := AP_INIT_TAKE1(
+        'InstantFpcBin',
+        @setInstantFpcBin,
+        nil,
+        RSRC_CONF,
+        'instantfpc binary executable path'
+    );
+    pascalParams[CACHEDIR_PARAM] := AP_INIT_TAKE1(
+        'InstantFpcCacheDir',
+        @setInstantFpcCacheDir,
+        nil, RSRC_CONF,
+        'instantfpc cache directory'
+    );
 
     {---------------------------------------------------
         Library initialization code

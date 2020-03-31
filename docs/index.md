@@ -197,3 +197,15 @@ in `/tmp`. You can set it to match your system as follows
 ```
 
 You need to make sure that cache directory is writeable by web server. After make any changes, restart Apache server.
+
+## Compiler configuration
+
+You can set any compiler configurations by creating `fpc.cfg` file in directory where pascal program resides. For example with content as follows,
+
+```
+# add configuration from default configuration 
+#INCLUDE /etc/fpc.cfg
+
+# compile with level 3 optimization
+-O3
+```

@@ -82,12 +82,7 @@ exports
         end;
         cgienv.add('CONTENT_TYPE=' + headerValue);
 
-        headerValue := asString(apr_table_get(req^.headers_in, 'Content-Length'));
-        if headerValue = '' then
-        begin
-            headerValue := '0';
-        end;
-        cgienv.add('CONTENT_LENGTH=' + headerValue);
+        cgienv.add('CONTENT_LENGTH=' + asString(apr_table_get(req^.headers_in, 'Content-Length')));
 
         cgienv.add('SERVER_PROTOCOL=' + asString(req^.protocol));
         cgienv.add('SERVER_PORT=' + IntToStr(ap_get_server_port(req)));

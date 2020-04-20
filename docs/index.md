@@ -209,3 +209,9 @@ You can set any compiler configurations by creating `fpc.cfg` file in directory 
 # compile with level 3 optimization
 -O3
 ```
+
+## Performance consideration
+
+This is experimental project so use in production setup should be avoided. Performance is not very good due
+to initial compilation task that is required to be carry out when source code is changed.
+Next execution will avoid compilation step thus give performance similar of CGI executable.

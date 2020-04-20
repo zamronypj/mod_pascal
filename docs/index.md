@@ -73,6 +73,8 @@ Open URL http://localhost/test.pas from Internet browser, you should see text `H
 
 If `test.pas` is downloaded then you do not register mod_pascal with Apache correctly.
 
+When not set, `Content-Type` response header is assumed `text/html`.
+
 To return response with header, add header line separated by newline
 
 ```
@@ -80,6 +82,15 @@ begin
     writeln('Content-Type : text/html');
     writeln();
     writeln('<h1>Hello from Pascal</h1>');
+end.
+```
+or as JSON
+
+```
+begin
+    writeln('Content-Type : application/json');
+    writeln();
+    writeln('{"message":"Hello from Pascal"}');
 end.
 ```
 

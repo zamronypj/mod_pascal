@@ -212,6 +212,6 @@ You can set any compiler configurations by creating `fpc.cfg` file in directory 
 
 ## Performance consideration
 
-This is experimental project so use in production setup should be avoided. Performance is not very good due
+This is experimental project. Using it in production setup should be avoided. Performance is not very good due
 to initial compilation task that is required to be carry out when source code is changed.
-Next execution will avoid compilation step thus give performance similar of CGI executable.
+When source code is not chhanged, next execution will avoid compilation step thus give similar performance of CGI executable.

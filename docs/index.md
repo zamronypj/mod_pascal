@@ -72,6 +72,7 @@ end.
 Open URL http://localhost/test.pas from Internet browser, you should see text `Hello from Pascal` printed in browser.
 
 If `test.pas` is downloaded then you do not register mod_pascal with Apache correctly.
+## Response header
 
 When not set, `Content-Type` response header is assumed `text/html`.
 

@@ -1,6 +1,6 @@
 # mod_pascal
 
-Apache 2.4 module implementation which is capable to execute Pascal program just like scripting language.
+Apache 2.4 module implementation which is capable of executing Pascal program just like scripting language.
 
 ## Requirement
 

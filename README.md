@@ -1,6 +1,6 @@
 # mod_pascal
 
-Apache 2.4 module implementation which is capable to execute Pascal program just like scripting language. [Read mod_pascal documentation](https://zamronypj.github.io/mod_pascal) for more information.
+Apache 2.4 module implementation which is capable of executing Pascal program just like scripting language. [Read mod_pascal documentation](https://zamronypj.github.io/mod_pascal) for more information.
 
 ## Requirement
 

@@ -80,7 +80,7 @@ To return response with header, add header line separated by newline
 
 ```
 begin
-    writeln('Content-Type : text/html');
+    writeln('Content-Type: text/html');
     writeln();
     writeln('<h1>Hello from Pascal</h1>');
 end.
@@ -89,7 +89,7 @@ or as JSON
 
 ```
 begin
-    writeln('Content-Type : application/json');
+    writeln('Content-Type: application/json');
     writeln();
     writeln('{"message":"Hello from Pascal"}');
 end.

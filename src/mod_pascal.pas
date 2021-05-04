@@ -185,6 +185,13 @@ exports
         //TODO: not very performant string operation. lot of string copies.
         //need to improve by avoiding it
         headerMarkerPos := pos(LineEnding+LineEnding, compileOutput);
+
+        if headerMarkerPos = 0 then
+        begin
+            //no header found
+            exit;
+        end;
+
         headerParts := copy(compileOutput, 1, headerMarkerPos - 1);
         headers := headerParts.split(LineEnding);
         for i:= 0 to Length(headers) - 1 do

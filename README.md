@@ -75,3 +75,6 @@ end.
 Open URL http://localhost/test.pas from Internet browser, you should see text `Hello from Pascal` printed in browser.
 
 If `test.pas` is downloaded then you do not register mod_pascal with Apache correctly.
+
+## Versioning
+mod_pascal follow [Semantic Versioning 2.0](https://semver.org/)

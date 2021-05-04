@@ -69,9 +69,8 @@ begin
 end.
 ```
 
-Open URL http://localhost/test.pas from Internet browser, you should see text `Hello from Pascal` printed in browser.
+Open URL http://localhost/test.pas from Internet browser, you should see text `Hello from Pascal` printed in browser otherwise [things may have gone wrong](#things-can-go-wrong)
 
-If `test.pas` is downloaded then you do not register mod_pascal with Apache correctly.
 ## Response header
 
 When not set, `Content-Type` response header is assumed `text/html`.
@@ -202,7 +201,7 @@ begin
 end.
 ```
 
-## More module configuration
+## <a name="module-configuration"></a>More module configuration
 
 By default, when not set, it is assumed that Free Pascal compiler path is
 `/usr/local/bin/fpc`, InstantFPC path is `/usr/local/bin/instantfpc` and cache directory
@@ -236,3 +235,22 @@ You can set any compiler configurations by creating `fpc.cfg` file in directory 
 This is experimental project. Using it in production setup should be avoided. Performance is not very good due
 to initial compilation task that is required when any of source codes are changed.
 When source codes are not changed, next execution will avoid compilation step thus give similar performance of CGI executable.
+
+## <a name="things-can-go-wrong"></a>Things can go wrong
+
+### Restarting Apache service fails
+Make sure you set correct path to `mod_pascal.so` in `pascal.load` file.
+
+### Pascal source code is downloaded instead of executed
+If `test.pas` is downloaded then you do not register `mod_pascal` with Apache correctly. Make sure that you use correct name for handler and module which is `pascal-handler` and `pascal-module` respectively.
+
+### Connection was reset
+
+If browser reports "The connection to the server was reset while the page was loading." check `/var/log/apache/error.log` for error. If you get
+```
+An unhandled exception occurred at $00007FAB82297C74:
+EProcess: Executable not found: "/usr/local/bin/instantfpc"
+  $00007FAB82297C74
+```
+Make sure you set correct path for Free Pascal compiler and InstantFpc binaries. You can either set `FpcBin` and `InstantFpcBin` in [module configuration](#module-configuration) or create symlink to those binaries. If you set in module configuration, do not forget to restart Apache service after making changes.
+

@@ -188,7 +188,7 @@ exports
 
         if headerMarkerPos = 0 then
         begin
-            //no header found
+            //no header section is found
             exit;
         end;
 
@@ -197,18 +197,21 @@ exports
         for i:= 0 to Length(headers) - 1 do
         begin
             keyval := headers[i].split(':');
-            key := trim(keyval[0]);
-            val := trim(keyval[1]);
-            if sameText(key, 'Status') then
+            if (length(keyval) = 2) then
             begin
-                result := strtoInt(val);
-            end else
-            if sameText(key, 'Content-Type') then
-            begin
-                ap_set_content_type(req, pchar(val));
-            end else
-            begin
-                apr_table_setn(req^.headers_out, pchar(key), pchar(val));
+                key := trim(keyval[0]);
+                val := trim(keyval[1]);
+                if sameText(key, 'Status') then
+                begin
+                    result := strtoInt(val);
+                end else
+                if sameText(key, 'Content-Type') then
+                begin
+                    ap_set_content_type(req, pchar(val));
+                end else
+                begin
+                    apr_table_setn(req^.headers_out, pchar(key), pchar(val));
+                end;
             end;
         end;
         //remove header part

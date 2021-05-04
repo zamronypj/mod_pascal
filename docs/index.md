@@ -223,7 +223,7 @@ You need to make sure that cache directory is writeable by web server. After mak
 You can set any compiler configurations by creating `fpc.cfg` file in directory where pascal program resides. For example with content as follows,
 
 ```
-# add configuration from default configuration 
+# add configuration from default configuration
 #INCLUDE /etc/fpc.cfg
 
 # compile with level 3 optimization
@@ -254,3 +254,12 @@ EProcess: Executable not found: "/usr/local/bin/instantfpc"
 ```
 Make sure you set correct path for Free Pascal compiler and InstantFpc binaries. You can either set `FpcBin` and `InstantFpcBin` in [module configuration](#module-configuration) or create symlink to those binaries. If you set in module configuration, do not forget to restart Apache service after making changes.
 
+### Fail to install FreeBSD
+
+You get error `Undefined symbol "operatingsystem_parameter_envp"`
+```
+# apachectl restart
+Performing sanity check on apache24 configuration:
+httpd: Syntax error on line 183 of /usr/local/etc/apache24/httpd.conf: Syntax error on line 9 of /usr/local/etc/apache24/modules.d/300_mod_pascal.conf: Cannot load libexec/apache24/mod_pascal.so into server: /usr/local/libexec/apache24/mod_pascal.so: Undefined symbol "operatingsystem_parameter_envp"
+```
+[See related issue](https://github.com/zamronypj/mod_pascal/issues/1)

@@ -2,6 +2,9 @@
 
 Apache 2.4 module implementation which is capable of executing Pascal program just like scripting language. [Read mod_pascal documentation](https://zamronypj.github.io/mod_pascal) for more information.
 
+[![LGPL 2.1 License](https://img.shields.io/github/license/zamronypj/mod_pascal.svg)](https://github.com/zamronypj/mod_pascal/blob/master/LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/zamronypj/mod_pascal.svg)](https://github.com/zamronypj/mod_pascal/releases)
+
 ## Requirement
 
 - [Free Pascal compiler](https://www.freepascal.org)

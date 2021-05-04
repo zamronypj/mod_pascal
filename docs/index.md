@@ -35,7 +35,7 @@ Create `pascal.load` file in `/etc/apache2/mods-available` directory with conten
 LoadModule pascal_module /path/to/mod_pascal.so
 ```
 
-It is important that you use `pascal_module` to identify mod_pascal module and
+Do not forget to replace `/path/to/mod_pascal.so` with actual path of `mod_pascal.so`. It is important that you use `pascal_module` to identify mod_pascal module and
 `pascal-handler` to identify handler.
 
 ### Enable mod_pascal

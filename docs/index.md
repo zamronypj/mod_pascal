@@ -254,7 +254,7 @@ EProcess: Executable not found: "/usr/local/bin/instantfpc"
 ```
 Make sure you set correct path for Free Pascal compiler and InstantFpc binaries. You can either set `FpcBin` and `InstantFpcBin` in [module configuration](#module-configuration) or create symlink to those binaries. If you set in module configuration, do not forget to restart Apache service after making changes.
 
-### Fail to install FreeBSD
+### Fail to install on FreeBSD
 
 You get error `Undefined symbol "operatingsystem_parameter_envp"`
 ```

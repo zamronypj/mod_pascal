@@ -18,6 +18,7 @@ Apache 2.4 module implementation which is capable of executing Pascal program ju
 $ git clone https://github.com/zamronypj/mod_pascal.git
 $ cd mod_pascal && ./setup.cfg.sh && ./build.sh
 ```
+If compilation is successful, new executable binary will be created `bin/mod_pascal.so`.
 
 ### Add Apache configuration to load module
 

@@ -1,6 +1,9 @@
 # mod_pascal
 
-Apache 2.4 module implementation which is capable to execute Pascal program just like scripting language. [Read mod_pascal documentation](https://zamronypj.github.io/mod_pascal) for more information.
+Apache 2.4 module implementation which is capable of executing Pascal program just like scripting language. [Read mod_pascal documentation](https://zamronypj.github.io/mod_pascal) for more information.
+
+[![LGPL 2.1 License](https://img.shields.io/github/license/zamronypj/mod_pascal.svg)](https://github.com/zamronypj/mod_pascal/blob/master/LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/zamronypj/mod_pascal.svg)](https://github.com/zamronypj/mod_pascal/releases)
 
 ## Requirement
 
@@ -15,6 +18,7 @@ Apache 2.4 module implementation which is capable to execute Pascal program just
 $ git clone https://github.com/zamronypj/mod_pascal.git
 $ cd mod_pascal && ./setup.cfg.sh && ./build.sh
 ```
+If compilation is successful, new executable binary will be created `bin/mod_pascal.so`.
 
 ### Add Apache configuration to load module
 
@@ -70,5 +74,7 @@ end.
 ```
 
 Open URL http://localhost/test.pas from Internet browser, you should see text `Hello from Pascal` printed in browser.
+If you do not see text, [something is wrong](https://zamronypj.github.io/mod_pascal/#things-can-go-wrong).
 
-If `test.pas` is downloaded then you do not register mod_pascal with Apache correctly.
+## Versioning
+mod_pascal follows [Semantic Versioning 2.0](https://semver.org/)
